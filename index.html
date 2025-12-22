@@ -64,6 +64,12 @@ body {
   color: #ff4444;
 }
 
+.alert{
+  <div class="timer" style="color:red;">
+📵 Do NOT close this page — Security scan in progress
+</div>
+  }
+
 .log {
   font-family: monospace;
   font-size: 13px;
@@ -157,6 +163,11 @@ const messages = [
   "Restricting background access...",
   "Locking sensitive services...",
   "Applying temporary security rules...",
+  // 📵 Do not close tab warning
+window.addEventListener("beforeunload", function (e) {
+  e.preventDefault();
+  e.returnValue = "";
+});
   "--------------------------------",
   "இயந்திர பாதுகாப்பு சோதனை நடைபெறுகிறது...",
   "Bluetooth செயல்பாடு ஆய்வு செய்யப்படுகிறது...",
