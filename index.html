@@ -1,48 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Security Alert</title>
+
 <style>
 body {
+  margin: 0;
   background: black;
-  color: #00ff00;
-  font-family: monospace;
-  padding: 20px;
+  font-family: system-ui, Arial;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
 }
-.red { color: red; }
+
+/* Phone container */
+.phone {
+  width: 360px;
+  max-width: 95%;
+  background: #111;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 40px red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: shake 0.2s infinite alternate;
+}
+
+/* Shake */
+@keyframes shake {
+  from { transform: translate(-50%, -50%) translateX(-1px); }
+  to   { transform: translate(-50%, -50%) translateX(1px); }
+}
+
+/* Blink */
+@keyframes blink {
+  0% {opacity:1;}
+  50%{opacity:0;}
+  100%{opacity:1;}
+}
+
+.header {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  animation: blink 1s infinite;
+}
+
+.alert {
+  background: #2b0000;
+  border: 1px solid red;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.alert h3 {
+  margin: 0 0 8px;
+  color: #ff4444;
+}
+
+.log {
+  font-family: monospace;
+  font-size: 13px;
+  color: #00ff99;
+  line-height: 1.4;
+  max-height: 160px;
+  overflow: hidden;
+}
+
+/* Progress bar */
+.progress {
+  margin-top: 8px;
+  height: 8px;
+  background: #333;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.bar {
+  height: 100%;
+  width: 0%;
+  background: red;
+  transition: width 0.5s;
+}
+
+.timer {
+  margin-top: 6px;
+  font-size: 13px;
+  text-align: center;
+  color: orange;
+  animation: blink 1.5s infinite;
+}
+
+.footer {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #aaa;
+  text-align: center;
+}
 </style>
 </head>
 
 <body>
-<h2 class="red">⚠ SECURITY ALERT ⚠</h2>
 
-<div id="text"></div>
+<div class="phone">
+  <div class="header">⚠ SECURITY ALERT ⚠</div>
+
+  <div class="alert">
+    <h3>Android System Warning</h3>
+
+    <div class="log" id="log"></div>
+
+    <div class="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="timer">System lockdown in <span id="time">25</span>s</div>
+    <div class="timer" id="location">📍 Locating device…</div>
+    <div class="timer" id="signal">📶 Intercepting signal…</div>
+    <div class="timer" id="battery">🔋 Checking battery health…</div>
+  </div>
+
+  <div class="footer">
+    Cyber Security Awareness Simulation<br>
+    No data accessed • No hacking
+  </div>
+</div>
 
 <script>
-const lines = [
-  "Connecting to device...",
-  "Establishing secure channel...",
-  "Scanning system files...",
-  "Checking permissions...",
-  "Monitoring activity...",
-  "⚠ SUSPICIOUS ACTIVITY DETECTED ⚠",
-  "Possible data exposure found",
+const messages = [
+  "Initializing security engine...",
+  "Loading threat detection modules...",
+  "Verifying system kernel...",
+  "Checking device integrity...",
+  "Scanning internal storage...",
+  "Scanning external storage...",
+  "Analyzing installed applications...",
+  "Reviewing application permissions...",
+  "Monitoring background processes...",
+  "Checking startup services...",
+  "Monitoring Bluetooth activity...",
+  "Scanning paired devices...",
+  "Analyzing Wi‑Fi interfaces...",
+  "Scanning open ports...",
+  "Reviewing system logs...",
+  "Comparing threat signatures...",
+  "⚠ WARNING: Irregular behavior detected ⚠",
+  "Unauthorized access attempt detected",
+  "Suspicious permission escalation",
+  "Possible remote connection found",
+  "Isolating suspicious process...",
+  "Restricting background access...",
+  "Locking sensitive services...",
+  "Applying temporary security rules...",
   "--------------------------------",
-  "THIS IS A CYBER AWARENESS DEMO",
+  "இயந்திர பாதுகாப்பு சோதனை நடைபெறுகிறது...",
+  "Bluetooth செயல்பாடு ஆய்வு செய்யப்படுகிறது...",
+  "சந்தேகத்திற்கிடமான செயல்பாடு கண்டறியப்பட்டது",
+  "பாதுகாப்பு பூட்டு செயல்படுத்தப்பட்டது",
+  "--------------------------------",
+  "SIMULATION COMPLETE",
+  "CYBER SECURITY AWARENESS DEMO",
   "NO DATA WAS ACCESSED",
+  "DO NOT TRUST UNKNOWN LINKS",
+  "DO NOT PAIR UNKNOWN DEVICES",
   "STAY SAFE ONLINE"
 ];
 
 let i = 0;
-function show() {
-  if (i < lines.length) {
-    document.getElementById("text").innerHTML += lines[i] + "<br>";
+let progress = 0;
+let timeLeft = 25;
+
+function showLog() {
+  if (i < messages.length) {
+    document.getElementById("log").innerHTML += messages[i] + "<br>";
     i++;
-    setTimeout(show, 800);
+    progress += 100 / messages.length;
+    document.getElementById("bar").style.width = progress + "%";
+    setTimeout(showLog, 600);
   }
 }
-show();
+showLog();
+
+/* Countdown */
+setInterval(() => {
+  if (timeLeft > 0) {
+    timeLeft--;
+    document.getElementById("time").innerText = timeLeft;
+  }
+}, 1000);
+
+/* Fake scans */
+setTimeout(() => {
+  document.getElementById("location").innerText =
+    "📍 Location traced: Chennai, India";
+}, 7000);
+
+setTimeout(() => {
+  document.getElementById("signal").innerText =
+    "📶 Signal interception detected (Bluetooth / Wi‑Fi)";
+}, 11000);
+
+setTimeout(() => {
+  document.getElementById("battery").innerText =
+    "🔋 Battery overheating risk detected";
+}, 15000);
+
+setTimeout(() => {
+  document.getElementById("battery").innerText =
+    "✔ Simulation only • No real access";
+}, 20000);
 </script>
 
 </body>
