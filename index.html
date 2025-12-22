@@ -64,12 +64,6 @@ body {
   color: #ff4444;
 }
 
-.alert{
-  <div class="timer" style="color:red;">
-📵 Do NOT close this page — Security scan in progress
-</div>
-  }
-
 .log {
   font-family: monospace;
   font-size: 13px;
@@ -102,6 +96,13 @@ body {
   animation: blink 1.5s infinite;
 }
 
+.warning {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 8px;
+}
+
 .footer {
   margin-top: 12px;
   font-size: 11px;
@@ -129,6 +130,10 @@ body {
     <div class="timer" id="location">📍 Locating device…</div>
     <div class="timer" id="signal">📶 Intercepting signal…</div>
     <div class="timer" id="battery">🔋 Checking battery health…</div>
+
+    <div class="warning">
+      📵 DO NOT CLOSE THIS PAGE — SECURITY SCAN ACTIVE
+    </div>
   </div>
 
   <div class="footer">
@@ -138,6 +143,13 @@ body {
 </div>
 
 <script>
+/* 🔒 POPUP WHEN TRYING TO CLOSE / REFRESH / BACK */
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
+  event.returnValue = "";
+});
+
+/* Fake scan messages */
 const messages = [
   "Initializing security engine...",
   "Loading threat detection modules...",
@@ -163,16 +175,6 @@ const messages = [
   "Restricting background access...",
   "Locking sensitive services...",
   "Applying temporary security rules...",
-  // 📵 Do not close tab warning
-window.addEventListener("beforeunload", function (e) {
-  e.preventDefault();
-  e.returnValue = "";
-});
-  "--------------------------------",
-  "இயந்திர பாதுகாப்பு சோதனை நடைபெறுகிறது...",
-  "Bluetooth செயல்பாடு ஆய்வு செய்யப்படுகிறது...",
-  "சந்தேகத்திற்கிடமான செயல்பாடு கண்டறியப்பட்டது",
-  "பாதுகாப்பு பூட்டு செயல்படுத்தப்பட்டது",
   "--------------------------------",
   "SIMULATION COMPLETE",
   "CYBER SECURITY AWARENESS DEMO",
