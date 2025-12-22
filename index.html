@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Security Alert</title>
+<style>
+body {
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  padding: 20px;
+}
+.red { color: red; }
+</style>
+</head>
+
+<body>
+<h2 class="red">⚠ SECURITY ALERT ⚠</h2>
+
+<div id="text"></div>
+
+<script>
+const lines = [
+  "Connecting to device...",
+  "Establishing secure channel...",
+  "Scanning system files...",
+  "Checking permissions...",
+  "Monitoring activity...",
+  "⚠ SUSPICIOUS ACTIVITY DETECTED ⚠",
+  "Possible data exposure found",
+  "--------------------------------",
+  "THIS IS A CYBER AWARENESS DEMO",
+  "NO DATA WAS ACCESSED",
+  "STAY SAFE ONLINE"
+];
+
+let i = 0;
+function show() {
+  if (i < lines.length) {
+    document.getElementById("text").innerHTML += lines[i] + "<br>";
+    i++;
+    setTimeout(show, 800);
+  }
+}
+show();
+</script>
+
+</body>
+</html>
