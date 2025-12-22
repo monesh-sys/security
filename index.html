@@ -15,7 +15,6 @@ body {
   overflow: hidden;
 }
 
-/* Phone container */
 .phone {
   width: 360px;
   max-width: 95%;
@@ -30,13 +29,11 @@ body {
   animation: shake 0.2s infinite alternate;
 }
 
-/* Shake */
 @keyframes shake {
   from { transform: translate(-50%, -50%) translateX(-1px); }
   to   { transform: translate(-50%, -50%) translateX(1px); }
 }
 
-/* Blink */
 @keyframes blink {
   0% {opacity:1;}
   50%{opacity:0;}
@@ -69,11 +66,10 @@ body {
   font-size: 13px;
   color: #00ff99;
   line-height: 1.4;
-  max-height: 160px;
+  max-height: 140px;
   overflow: hidden;
 }
 
-/* Progress bar */
 .progress {
   margin-top: 8px;
   height: 8px;
@@ -85,7 +81,6 @@ body {
   height: 100%;
   width: 0%;
   background: red;
-  transition: width 0.5s;
 }
 
 .timer {
@@ -101,6 +96,18 @@ body {
   font-weight: bold;
   text-align: center;
   margin-top: 8px;
+}
+
+.final {
+  display: none;
+  margin-top: 12px;
+  padding: 10px;
+  background: #002b00;
+  border: 1px solid #00ff99;
+  color: #00ff99;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 13px;
 }
 
 .footer {
@@ -134,22 +141,27 @@ body {
     <div class="warning">
       📵 DO NOT CLOSE THIS PAGE — SECURITY SCAN ACTIVE
     </div>
+
+    <!-- FINAL MESSAGE -->
+    <div class="final" id="final">
+      ✅ Scan completed successfully<br><br>
+      This was a <b>Cyber Security Awareness Simulation</b><br>
+      No data was accessed • No hacking<br>
+      Stay safe online
+    </div>
   </div>
 
   <div class="footer">
-    Cyber Security Awareness Simulation<br>
-    No data accessed • No hacking
+    Cyber Security Awareness Simulation
   </div>
 </div>
 
 <script>
-/* 🔒 POPUP WHEN TRYING TO CLOSE / REFRESH / BACK */
 window.addEventListener("beforeunload", function (event) {
   event.preventDefault();
   event.returnValue = "";
 });
 
-/* Fake scan messages */
 const messages = [
   "Initializing security engine...",
   "Loading threat detection modules...",
@@ -160,28 +172,12 @@ const messages = [
   "Analyzing installed applications...",
   "Reviewing application permissions...",
   "Monitoring background processes...",
-  "Checking startup services...",
   "Monitoring Bluetooth activity...",
-  "Scanning paired devices...",
-  "Analyzing Wi‑Fi interfaces...",
-  "Scanning open ports...",
+  "Analyzing network interfaces...",
   "Reviewing system logs...",
-  "Comparing threat signatures...",
   "⚠ WARNING: Irregular behavior detected ⚠",
-  "Unauthorized access attempt detected",
-  "Suspicious permission escalation",
-  "Possible remote connection found",
-  "Isolating suspicious process...",
-  "Restricting background access...",
-  "Locking sensitive services...",
-  "Applying temporary security rules...",
-  "--------------------------------",
-  "SIMULATION COMPLETE",
-  "CYBER SECURITY AWARENESS DEMO",
-  "NO DATA WAS ACCESSED",
-  "DO NOT TRUST UNKNOWN LINKS",
-  "DO NOT PAIR UNKNOWN DEVICES",
-  "STAY SAFE ONLINE"
+  "Isolating suspicious activity...",
+  "Applying security rules..."
 ];
 
 let i = 0;
@@ -194,20 +190,29 @@ function showLog() {
     i++;
     progress += 100 / messages.length;
     document.getElementById("bar").style.width = progress + "%";
-    setTimeout(showLog, 600);
+    setTimeout(showLog, 1500);
   }
 }
 showLog();
 
-/* Countdown */
-setInterval(() => {
+/* Countdown + FINAL MESSAGE */
+const timer = setInterval(() => {
   if (timeLeft > 0) {
     timeLeft--;
     document.getElementById("time").innerText = timeLeft;
+  } else {
+    clearInterval(timer);
+
+    // Stop effects
+    document.querySelector(".phone").style.animation = "none";
+    document.querySelector(".header").style.animation = "none";
+
+    // Show final message
+    document.getElementById("final").style.display = "block";
   }
 }, 1000);
 
-/* Fake scans */
+/* Fake scan results */
 setTimeout(() => {
   document.getElementById("location").innerText =
     "📍 Location traced: Chennai, India";
@@ -215,18 +220,13 @@ setTimeout(() => {
 
 setTimeout(() => {
   document.getElementById("signal").innerText =
-    "📶 Signal interception detected (Bluetooth / Wi‑Fi)";
+    "📶 Signal interception detected";
 }, 11000);
 
 setTimeout(() => {
   document.getElementById("battery").innerText =
-    "🔋 Battery overheating risk detected";
+    "🔋 Battery risk detected";
 }, 15000);
-
-setTimeout(() => {
-  document.getElementById("battery").innerText =
-    "✔ Simulation only • No real access";
-}, 20000);
 </script>
 
 </body>
